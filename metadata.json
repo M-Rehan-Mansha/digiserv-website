@@ -2,5 +2,7 @@
   "name": "DIGISERV — Digital, Creative & Business Solutions Agency",
   "description": "One Agency. Multiple Services. Endless Possibilities. Full-service digital, creative, technological and business solutions serving clients worldwide.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

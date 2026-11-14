@@ -1,4 +1,5 @@
 import type { PortfolioCategory, PortfolioProject } from '../types/agency';
+import { AGENCY_MEDIA } from '../assets/media';
 
 export const PORTFOLIO_CATEGORIES: ('All' | PortfolioCategory)[] = [
   'All',
@@ -42,7 +43,7 @@ export const INITIAL_PORTFOLIO_PROJECTS: PortfolioProject[] = [
       'Structured modular layout grids with strict typographic hierarchy and WCAG AA contrast.',
       'Integrated clean server-side validation for contact and quote submissions.',
     ],
-    imageUrl: '/src/assets/images/work_web_platform_1794678620412.jpg',
+    imageUrl: AGENCY_MEDIA.workWebPlatform,
     imageAlt: 'Sample B2B enterprise web platform interface displayed on a studio monitor',
   },
   {
@@ -74,7 +75,7 @@ export const INITIAL_PORTFOLIO_PROJECTS: PortfolioProject[] = [
       'Configured structured international shipping and multi-currency display readiness.',
       'Embedded clear return, delivery, and support information to strengthen buyer confidence.',
     ],
-    imageUrl: '/src/assets/images/work_ecommerce_store_1794678620499.jpg',
+    imageUrl: AGENCY_MEDIA.workEcommerceStore,
     imageAlt: 'Sample luxury ecommerce storefront displayed across laptop and tablet',
   },
   {
@@ -106,7 +107,7 @@ export const INITIAL_PORTFOLIO_PROJECTS: PortfolioProject[] = [
       'Applied consistent color grading and loudness normalization across long and short exports.',
       'Packaged each video with clear title angles and thumbnail contrast hierarchy.',
     ],
-    imageUrl: '/src/assets/images/work_creative_media_1794678620846.jpg',
+    imageUrl: AGENCY_MEDIA.workCreativeMedia,
     imageAlt: 'Sample video editing timeline and color grading monitor in a dark studio',
   },
   {
@@ -137,7 +138,7 @@ export const INITIAL_PORTFOLIO_PROJECTS: PortfolioProject[] = [
       'Aligned visual restraint and typographic precision with international B2B buyer expectations.',
       'Eliminated inconsistent templates by standardizing spacing, color tokens, and slide layouts.',
     ],
-    imageUrl: '/src/assets/images/about_creative_team_1794678619682.jpg',
+    imageUrl: AGENCY_MEDIA.aboutCreativeTeam,
     imageAlt: 'Modern architectural studio conference room representing corporate branding showcase',
   },
   {
@@ -168,7 +169,7 @@ export const INITIAL_PORTFOLIO_PROJECTS: PortfolioProject[] = [
       'Balanced educational breakdowns, behind-the-scenes process posts, and direct service invitations.',
       'Maintained strict visual consistency across every carousel slide and cover frame.',
     ],
-    imageUrl: '/src/assets/images/hero_agency_studio_1794678619347.jpg',
+    imageUrl: AGENCY_MEDIA.heroAgencyStudio,
     imageAlt: 'Digital studio environment representing coordinated social media management',
   },
   {
@@ -199,7 +200,7 @@ export const INITIAL_PORTFOLIO_PROJECTS: PortfolioProject[] = [
       'Built distinct creative hooks for cold prospecting versus warm retargeting audiences.',
       'Aligned ad copy directly with landing page headlines to preserve message match.',
     ],
-    imageUrl: '/src/assets/images/work_web_platform_1794678620412.jpg',
+    imageUrl: AGENCY_MEDIA.workWebPlatform,
     imageAlt: 'Analytics and campaign management layout on studio display',
   },
   {
@@ -229,7 +230,7 @@ export const INITIAL_PORTFOLIO_PROJECTS: PortfolioProject[] = [
       'Applied disciplined grid spacing and clear focal hierarchy so messaging reads cleanly at thumbnail scale.',
       'Delivered organized, clearly named source and export packages.',
     ],
-    imageUrl: '/src/assets/images/work_ecommerce_store_1794678620499.jpg',
+    imageUrl: AGENCY_MEDIA.workEcommerceStore,
     imageAlt: 'Minimalist commercial layout showcasing structured graphic design grid',
   },
   {
@@ -259,7 +260,7 @@ export const INITIAL_PORTFOLIO_PROJECTS: PortfolioProject[] = [
       'Integrated human quality gates before any generated copy or media goes live.',
       'Connected form and chat inquiries directly into structured team notification channels.',
     ],
-    imageUrl: '/src/assets/images/work_creative_media_1794678620846.jpg',
+    imageUrl: AGENCY_MEDIA.workCreativeMedia,
     imageAlt: 'Production desk representing AI content creation and workflow automation',
   },
 ];

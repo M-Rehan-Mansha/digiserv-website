@@ -10,6 +10,7 @@ import { Reveal } from '../components/Reveal';
 import { SERVICES } from '../data/services';
 import { DEPARTMENTS } from '../data/departments';
 import { PORTFOLIO_CATEGORIES } from '../data/portfolio';
+import { AGENCY_MEDIA } from '../assets/media';
 import { useAgency } from '../context/AgencyContext';
 import type { PortfolioCategory } from '../types/agency';
 
@@ -150,10 +151,11 @@ export function HomePage() {
             <div className="lg:col-span-5 flex">
               <div className="relative w-full rounded-xl overflow-hidden border border-[#292638] bg-[#101019] min-h-[260px] sm:min-h-[340px] lg:min-h-[430px]">
                 <ResilientImage
-                  src="/src/assets/images/hero_agency_studio_1794678619347.jpg"
+                  src={AGENCY_MEDIA.heroAgencyStudio}
                   alt="DIGISERV digital technology and creative agency studio environment"
                   className="w-full h-full object-cover"
                   fallbackLabel="DIGISERV Global Agency Studio"
+                  priority
                 />
                 <div
                   aria-hidden="true"
@@ -340,7 +342,7 @@ export function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
             <div className="lg:col-span-6 rounded-xl overflow-hidden border border-[#292638] bg-[#101019] min-h-[260px] sm:min-h-[340px]">
               <ResilientImage
-                src="/src/assets/images/about_creative_team_1794678619682.jpg"
+                src={AGENCY_MEDIA.aboutCreativeTeam}
                 alt="DIGISERV leadership and creative planning conference space"
                 className="w-full h-full object-cover"
                 fallbackLabel="DIGISERV Strategy & Execution"

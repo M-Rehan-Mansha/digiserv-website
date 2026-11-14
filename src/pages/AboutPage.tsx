@@ -3,6 +3,7 @@ import { ArrowRight, Check } from 'lucide-react';
 import { SeoHead } from '../components/SeoHead';
 import { ResilientImage } from '../components/ResilientImage';
 import { ClientTestimonials } from '../components/ClientTestimonials';
+import { AGENCY_MEDIA } from '../assets/media';
 import { DEPARTMENTS } from '../data/departments';
 
 const PRINCIPLES = [
@@ -60,7 +61,7 @@ export function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
             <div className="lg:col-span-7 rounded-xl overflow-hidden border border-[#292638] bg-[#101019] min-h-[300px]">
               <ResilientImage
-                src="/src/assets/images/about_creative_team_1794678619682.jpg"
+                src={AGENCY_MEDIA.aboutCreativeTeam}
                 alt="DIGISERV executive conference and creative planning space"
                 className="w-full h-full object-cover"
                 fallbackLabel="DIGISERV Agency Studio"
