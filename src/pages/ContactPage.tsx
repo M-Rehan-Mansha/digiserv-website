@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, Calendar, FileText, Mail, MessageSquare, Settings } from 'lucide-react';
 import { SeoHead } from '../components/SeoHead';
 import { InquiryForm } from '../components/InquiryForm';
+import { Reveal } from '../components/Reveal';
 import { useAgency } from '../context/AgencyContext';
 
 export function ContactPage() {
@@ -38,7 +39,7 @@ export function ContactPage() {
       </section>
 
       <section className="bg-[#08080D] py-16">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-8">
             <InquiryForm mode="contact" submitLabel="Send Inquiry" />
           </div>
@@ -53,7 +54,7 @@ export function ContactPage() {
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium transition-colors"
+                    className="w-full min-h-[44px] flex items-center justify-between px-4 py-3 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium cta-glow"
                   >
                     <span className="inline-flex items-center gap-2.5">
                       <MessageSquare className="w-4 h-4" aria-hidden="true" />
@@ -143,7 +144,7 @@ export function ContactPage() {
               <p>United States · United Kingdom · United Arab Emirates · Canada · Australia · Worldwide</p>
             </div>
           </aside>
-        </div>
+        </Reveal>
       </section>
     </>
   );

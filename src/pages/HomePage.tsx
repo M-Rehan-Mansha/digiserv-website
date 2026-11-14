@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, Check } from 'lucide-react';
 import { SeoHead } from '../components/SeoHead';
 import { ServiceIcon } from '../components/ServiceIcon';
 import { ResilientImage } from '../components/ResilientImage';
 import { GlobalNetworkGraphic } from '../components/GlobalNetworkGraphic';
 import { ClientTestimonials } from '../components/ClientTestimonials';
-import { Reveal } from '../components/Reveal';
+import { InteractiveCard } from '../components/InteractiveCard';
+import { ParallaxLayer, Reveal, RevealItem, RevealStagger } from '../components/Reveal';
 import { SERVICES } from '../data/services';
 import { DEPARTMENTS } from '../data/departments';
 import { PORTFOLIO_CATEGORIES } from '../data/portfolio';
@@ -79,6 +81,7 @@ const MARKETS = ['USA', 'UK', 'UAE', 'PK', 'Canada', 'Australia', 'Worldwide'];
 export function HomePage() {
   const { portfolio } = useAgency();
   const [activeCategory, setActiveCategory] = useState<'All' | PortfolioCategory>('All');
+  const prefersReduced = useReducedMotion();
 
   const filteredWork =
     activeCategory === 'All'
@@ -102,15 +105,25 @@ export function HomePage() {
       <section className="relative overflow-hidden border-b border-[#292638] bg-[#08080D]">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-agency-grid [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_80%)]"
+          className="pointer-events-none absolute inset-0 bg-agency-grid [mask-image:radial-gradient(ellipse_at_top,black_35%,transparent_80%)]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -top-36 right-0 w-[620px] h-[620px] rounded-full bg-[#762BFF]/14 blur-[150px]"
+          className="pointer-events-none absolute -top-36 right-[-6%] w-[560px] h-[560px] rounded-full bg-[#762BFF]/16 blur-[140px] animate-luxury-float"
         />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-40 left-[-8%] w-[460px] h-[460px] rounded-full bg-[#A855F7]/10 blur-[140px] animate-luxury-drift"
+        />
+
         <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
-            <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
+            <motion.div
+              initial={prefersReduced ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-7 flex flex-col justify-center space-y-6"
+            >
               <p className="text-xs sm:text-sm font-medium text-[#A855F7] tracking-wide">
                 Serving Businesses, Entrepreneurs &amp; Creators Worldwide.
               </p>
@@ -122,7 +135,8 @@ export function HomePage() {
                   textWrap: 'balance',
                 }}
               >
-                Everything Your Business Needs. All Under One Roof.
+                Everything Your Business Needs.{' '}
+                <span className="silver-accent-text">All Under One Roof.</span>
               </h1>
 
               <p className="text-base sm:text-lg text-[#A5A5B5] leading-relaxed max-w-2xl">
@@ -131,51 +145,58 @@ export function HomePage() {
                 succeed in the digital world.
               </p>
 
-              <div className="pt-2 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3.5 sm:gap-4">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3.5 sm:gap-4 pt-2">
                 <Link
                   to="/services"
-                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium transition-colors whitespace-nowrap"
+                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium cta-glow whitespace-nowrap"
                 >
                   <span>Explore Our Services</span>
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
                 <Link
                   to="/consultation"
-                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg border border-[#292638] bg-[#101019] hover:border-[#762BFF] text-white text-sm font-medium transition-colors whitespace-nowrap"
+                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg border border-[#292638] bg-[#101019]/90 hover:border-[#762BFF] hover:bg-[#141221] text-white text-sm font-medium transition-colors whitespace-nowrap"
                 >
                   <span>Let’s Discuss Your Project</span>
                 </Link>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="lg:col-span-5 flex">
-              <div className="relative w-full rounded-xl overflow-hidden border border-[#292638] bg-[#101019] min-h-[260px] sm:min-h-[340px] lg:min-h-[430px]">
-                <ResilientImage
-                  src={AGENCY_MEDIA.heroAgencyStudio}
-                  alt="DIGISERV digital technology and creative agency studio environment"
-                  className="w-full h-full object-cover"
-                  fallbackLabel="DIGISERV Global Agency Studio"
-                  priority
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-[#08080D]/85 via-[#08080D]/15 to-transparent"
-                />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-white/85">
-                  <span>4 Specialized Departments</span>
-                  <span aria-hidden="true" className="text-[#A855F7]">·</span>
-                  <span>12 Core Disciplines</span>
+            <motion.div
+              initial={prefersReduced ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.56, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-5 flex"
+            >
+              <ParallaxLayer offset={14} className="w-full">
+                <div className="relative w-full h-full rounded-xl overflow-hidden border border-[#292638] bg-[#101019] min-h-[260px] sm:min-h-[340px] lg:min-h-[430px] shadow-[0_24px_70px_-30px_rgba(118,43,255,0.45)]">
+                  <ResilientImage
+                    src={AGENCY_MEDIA.heroAgencyStudio}
+                    alt="DIGISERV digital technology and creative agency studio environment"
+                    className="w-full h-full object-cover"
+                    fallbackLabel="DIGISERV Global Agency Studio"
+                    priority
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-[#08080D]/88 via-[#08080D]/15 to-transparent"
+                  />
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-white/90">
+                    <span>4 Specialized Departments</span>
+                    <span aria-hidden="true" className="text-[#A855F7]">·</span>
+                    <span>12 Core Disciplines</span>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </ParallaxLayer>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Trust / Value Section */}
       <section className="py-16 sm:py-24 border-b border-[#292638] bg-[#101019]">
-        <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="max-w-3xl space-y-4">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <Reveal className="max-w-3xl space-y-4">
             <h2
               className="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-tight"
               style={{ textWrap: 'balance' }}
@@ -186,29 +207,36 @@ export function HomePage() {
               Why work with multiple service providers when you can access complete digital,
               creative and business solutions through one professional agency?
             </p>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+          <RevealStagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
             {TRUST_HIGHLIGHTS.map((item) => (
-              <div
-                key={item.num}
-                className="rounded-xl border border-[#292638] bg-[#08080D] p-6 space-y-3 hover:border-[#3E3954] transition-colors"
-              >
-                <span className="font-mono-tabular text-xs font-medium text-[#A855F7]">
-                  {item.num}
-                </span>
-                <h3 className="font-display text-lg font-semibold text-white">{item.title}</h3>
-                <p className="text-sm text-[#A5A5B5] leading-relaxed">{item.description}</p>
-              </div>
+              <RevealItem key={item.num} className="h-full">
+                <InteractiveCard className="h-full bg-[#08080D] p-6">
+                  <div className="space-y-3">
+                    <span className="font-mono-tabular text-xs font-medium text-[#A855F7]">
+                      {item.num}
+                    </span>
+                    <h3 className="font-display text-lg font-semibold text-white group-hover:text-white transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-[#A5A5B5] leading-relaxed">{item.description}</p>
+                  </div>
+                </InteractiveCard>
+              </RevealItem>
             ))}
-          </div>
-        </Reveal>
+          </RevealStagger>
+        </div>
       </section>
 
       {/* Main Services Section (12 Cards) */}
-      <section className="py-16 sm:py-24 border-b border-[#292638] bg-[#08080D]">
-        <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <section className="relative overflow-hidden py-16 sm:py-24 border-b border-[#292638] bg-[#08080D]">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-16 left-1/2 -translate-x-1/2 w-[780px] h-[360px] rounded-full bg-[#762BFF]/8 blur-[160px]"
+        />
+        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="max-w-2xl space-y-3">
               <h2
                 className="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-tight"
@@ -223,62 +251,67 @@ export function HomePage() {
             </div>
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 text-sm font-medium text-[#A855F7] hover:text-white transition-colors whitespace-nowrap shrink-0 py-1"
+              className="inline-flex items-center gap-2 min-h-[44px] text-sm font-medium text-[#A855F7] hover:text-white transition-colors whitespace-nowrap shrink-0 py-1"
             >
               <span>View Full Service Directory</span>
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          <RevealStagger
+            staggerDelay={0.035}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
+          >
             {SERVICES.map((service) => (
-              <Link
-                key={service.id}
-                to={`/services/${service.slug}`}
-                className="group relative overflow-hidden rounded-xl border border-[#292638] bg-[#101019] p-6 flex flex-col justify-between gap-6 hover:border-[#762BFF] hover:-translate-y-0.5 transition-[transform,border-color] duration-200"
-              >
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#A855F7]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                />
+              <RevealItem key={service.id} className="h-full">
+                <InteractiveCard className="h-full bg-[#101019]">
+                  <Link
+                    to={`/services/${service.slug}`}
+                    className="h-full p-6 flex flex-col justify-between gap-6 focus-visible:outline-none"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="w-11 h-11 rounded-lg border border-[#292638] bg-[#08080D] flex items-center justify-center text-[#A855F7] group-hover:border-[#762BFF]/80 group-hover:text-white group-hover:shadow-[0_0_22px_-4px_rgba(118,43,255,0.65)] transition-[border-color,color,box-shadow] duration-200">
+                          <ServiceIcon name={service.iconName} className="w-5 h-5" />
+                        </div>
+                        <span className="font-mono-tabular text-xs text-[#A5A5B5]">
+                          {service.id} · {service.subServices.length} Capabilities
+                        </span>
+                      </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="w-11 h-11 rounded-lg border border-[#292638] bg-[#08080D] flex items-center justify-center text-[#A855F7] group-hover:border-[#762BFF]/70 group-hover:text-white transition-colors">
-                      <ServiceIcon name={service.iconName} className="w-5 h-5" />
+                      <div className="space-y-2">
+                        <h3 className="font-display text-lg font-semibold text-white group-hover:text-[#A855F7] transition-colors duration-200">
+                          {service.title}
+                        </h3>
+                        <p className="text-sm text-[#A5A5B5] leading-relaxed">
+                          {service.shortDescription}
+                        </p>
+                      </div>
                     </div>
-                    <span className="font-mono-tabular text-xs text-[#A5A5B5]">
-                      {service.id} · {service.subServices.length} Capabilities
-                    </span>
-                  </div>
 
-                  <div className="space-y-2">
-                    <h3 className="font-display text-lg font-semibold text-white group-hover:text-[#A855F7] transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm text-[#A5A5B5] leading-relaxed">
-                      {service.shortDescription}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-[#292638] flex items-center justify-between text-sm font-medium text-white">
-                  <span>Explore Service</span>
-                  <ArrowRight
-                    className="w-4 h-4 text-[#A855F7] group-hover:translate-x-1 transition-transform duration-150"
-                    aria-hidden="true"
-                  />
-                </div>
-              </Link>
+                    <div className="pt-4 border-t border-[#292638] flex items-center justify-between text-sm font-medium text-white">
+                      <span>Explore Service</span>
+                      <ArrowRight
+                        className="w-4 h-4 text-[#A855F7] group-hover:translate-x-1.5 transition-transform duration-200"
+                        aria-hidden="true"
+                      />
+                    </div>
+                  </Link>
+                </InteractiveCard>
+              </RevealItem>
             ))}
-          </div>
-        </Reveal>
+          </RevealStagger>
+        </div>
       </section>
 
       {/* Our Four Departments */}
-      <section className="py-16 sm:py-24 border-b border-[#292638] bg-[#101019]">
-        <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <section className="relative overflow-hidden py-16 sm:py-24 border-b border-[#292638] bg-[#101019]">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-32 top-24 w-[480px] h-[480px] rounded-full bg-[#762BFF]/10 blur-[150px] animate-luxury-drift"
+        />
+        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="max-w-2xl space-y-3">
               <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-tight">
                 Our Four Specialized Departments
@@ -289,67 +322,77 @@ export function HomePage() {
             </div>
             <Link
               to="/departments"
-              className="inline-flex items-center gap-2 text-sm font-medium text-[#A855F7] hover:text-white transition-colors whitespace-nowrap shrink-0 py-1"
+              className="inline-flex items-center gap-2 min-h-[44px] text-sm font-medium text-[#A855F7] hover:text-white transition-colors whitespace-nowrap shrink-0 py-1"
             >
               <span>Explore All Departments</span>
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <RevealStagger className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {DEPARTMENTS.map((dept) => (
-              <div
-                key={dept.id}
-                className="rounded-xl border border-[#292638] bg-[#08080D] p-6 sm:p-8 space-y-5 hover:border-[#3E3954] transition-colors"
-              >
-                <div className="space-y-2">
-                  <span className="font-mono-tabular text-xs text-[#A855F7]">
-                    Department {dept.number}
-                  </span>
-                  <h3 className="font-display text-xl font-semibold text-white">
-                    {dept.number}. {dept.name}
-                  </h3>
-                  <p className="text-sm text-[#A5A5B5] leading-relaxed">{dept.summary}</p>
-                </div>
+              <RevealItem key={dept.id} className="h-full">
+                <InteractiveCard className="h-full bg-[#08080D] p-6 sm:p-8">
+                  <div className="h-full flex flex-col justify-between space-y-5">
+                    <div className="space-y-5">
+                      <div className="space-y-2">
+                        <span className="font-mono-tabular text-xs text-[#A855F7]">
+                          Department {dept.number}
+                        </span>
+                        <h3 className="font-display text-xl font-semibold text-white">
+                          {dept.number}. {dept.name}
+                        </h3>
+                        <p className="text-sm text-[#A5A5B5] leading-relaxed">{dept.summary}</p>
+                      </div>
 
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-3 border-t border-[#292638] text-sm text-[#A5A5B5]">
-                  {dept.capabilities.map((cap) => (
-                    <li key={cap} className="flex items-center gap-2">
-                      <Check className="w-4 h-4 text-[#A855F7] shrink-0" aria-hidden="true" />
-                      <span>{cap}</span>
-                    </li>
-                  ))}
-                </ul>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-3 border-t border-[#292638] text-sm text-[#A5A5B5]">
+                        {dept.capabilities.map((cap) => (
+                          <li key={cap} className="flex items-center gap-2">
+                            <Check className="w-4 h-4 text-[#A855F7] shrink-0" aria-hidden="true" />
+                            <span>{cap}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                <div className="pt-2">
-                  <Link
-                    to={`/departments#${dept.id}`}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-white hover:text-[#A855F7] transition-colors py-1"
-                  >
-                    <span>View Division Services</span>
-                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                  </Link>
-                </div>
-              </div>
+                    <div className="pt-2">
+                      <Link
+                        to={`/departments#${dept.id}`}
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-white hover:text-[#A855F7] transition-colors py-1"
+                      >
+                        <span>View Division Services</span>
+                        <ArrowRight
+                          className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
+                          aria-hidden="true"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </InteractiveCard>
+              </RevealItem>
             ))}
-          </div>
-        </Reveal>
+          </RevealStagger>
+        </div>
       </section>
 
       {/* Why Choose DIGISERV */}
-      <section className="py-16 sm:py-24 border-b border-[#292638] bg-[#08080D]">
-        <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-24 border-b border-[#292638] bg-[#08080D] overflow-hidden">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
-            <div className="lg:col-span-6 rounded-xl overflow-hidden border border-[#292638] bg-[#101019] min-h-[260px] sm:min-h-[340px]">
-              <ResilientImage
-                src={AGENCY_MEDIA.aboutCreativeTeam}
-                alt="DIGISERV leadership and creative planning conference space"
-                className="w-full h-full object-cover"
-                fallbackLabel="DIGISERV Strategy & Execution"
-              />
-            </div>
+            <Reveal direction="right" className="lg:col-span-6">
+              <ParallaxLayer offset={16} className="h-full">
+                <div className="h-full rounded-xl overflow-hidden border border-[#292638] bg-[#101019] min-h-[260px] sm:min-h-[340px] shadow-[0_24px_60px_-32px_rgba(118,43,255,0.4)]">
+                  <ResilientImage
+                    src={AGENCY_MEDIA.aboutCreativeTeam}
+                    alt="DIGISERV leadership and creative planning conference space"
+                    className="w-full h-full object-cover"
+                    fallbackLabel="DIGISERV Strategy & Execution"
+                  />
+                </div>
+              </ParallaxLayer>
+            </Reveal>
 
-            <div className="lg:col-span-6 flex flex-col justify-center space-y-6">
+            <Reveal direction="left" className="lg:col-span-6 flex flex-col justify-center space-y-6">
               <div className="space-y-3">
                 <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-tight">
                   Your Growth. Our Expertise.
@@ -360,33 +403,38 @@ export function HomePage() {
                 </p>
               </div>
 
-              <ul className="divide-y divide-[#292638] border-y border-[#292638]">
+              <RevealStagger
+                staggerDelay={0.04}
+                className="divide-y divide-[#292638] border-y border-[#292638]"
+              >
                 {WHY_CHOOSE_ITEMS.map((item) => (
-                  <li key={item} className="py-3.5 flex items-center gap-3 text-sm sm:text-base text-white">
-                    <Check className="w-4 h-4 text-[#A855F7] shrink-0" aria-hidden="true" />
-                    <span>{item}</span>
-                  </li>
+                  <RevealItem key={item}>
+                    <div className="py-3.5 flex items-center gap-3 text-sm sm:text-base text-white">
+                      <Check className="w-4 h-4 text-[#A855F7] shrink-0" aria-hidden="true" />
+                      <span>{item}</span>
+                    </div>
+                  </RevealItem>
                 ))}
-              </ul>
+              </RevealStagger>
 
               <div>
                 <Link
                   to="/about"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-[#A855F7] hover:text-white transition-colors py-1"
+                  className="inline-flex items-center gap-2 min-h-[44px] text-sm font-medium text-[#A855F7] hover:text-white transition-colors py-1"
                 >
                   <span>About DIGISERV</span>
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
               </div>
-            </div>
+            </Reveal>
           </div>
-        </Reveal>
+        </div>
       </section>
 
       {/* How We Work */}
       <section className="py-16 sm:py-24 border-b border-[#292638] bg-[#101019]">
-        <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="max-w-2xl space-y-3">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <Reveal className="max-w-2xl space-y-3">
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-tight">
               How We Work
             </h2>
@@ -394,29 +442,45 @@ export function HomePage() {
               A disciplined four-step delivery process designed for clarity from discovery call to
               ongoing support.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-            {PROCESS_STEPS.map((item) => (
-              <div
-                key={item.step}
-                className="rounded-xl border border-[#292638] bg-[#08080D] p-6 space-y-3"
-              >
-                <span className="font-mono-tabular text-xs font-medium text-[#A855F7]">
-                  Step {item.step}
-                </span>
-                <h3 className="font-display text-xl font-semibold text-white">{item.title}</h3>
-                <p className="text-sm text-[#A5A5B5] leading-relaxed">{item.description}</p>
-              </div>
-            ))}
+          <div className="relative">
+            {!prefersReduced && (
+              <motion.div
+                aria-hidden="true"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                className="hidden lg:block absolute top-11 left-12 right-12 h-px origin-left bg-gradient-to-r from-[#762BFF]/60 via-[#A855F7]/70 to-[#E2E2F0]/40 pointer-events-none"
+              />
+            )}
+
+            <RevealStagger className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+              {PROCESS_STEPS.map((item) => (
+                <RevealItem key={item.step} className="h-full">
+                  <InteractiveCard className="h-full bg-[#08080D] p-6">
+                    <div className="space-y-3">
+                      <span className="font-mono-tabular text-xs font-medium text-[#A855F7]">
+                        Step {item.step}
+                      </span>
+                      <h3 className="font-display text-xl font-semibold text-white">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-[#A5A5B5] leading-relaxed">{item.description}</p>
+                    </div>
+                  </InteractiveCard>
+                </RevealItem>
+              ))}
+            </RevealStagger>
           </div>
-        </Reveal>
+        </div>
       </section>
 
       {/* Portfolio / Featured Work */}
       <section className="py-16 sm:py-24 border-b border-[#292638] bg-[#08080D]">
-        <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="max-w-2xl space-y-3">
               <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-tight">
                 Creative Work. Real Solutions.
@@ -428,12 +492,12 @@ export function HomePage() {
             </div>
             <Link
               to="/work"
-              className="inline-flex items-center gap-2 text-sm font-medium text-[#A855F7] hover:text-white transition-colors whitespace-nowrap shrink-0 py-1"
+              className="inline-flex items-center gap-2 min-h-[44px] text-sm font-medium text-[#A855F7] hover:text-white transition-colors whitespace-nowrap shrink-0 py-1"
             >
               <span>Explore All Work</span>
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
-          </div>
+          </Reveal>
 
           <div
             className="flex sm:flex-wrap items-center gap-2 overflow-x-auto pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 no-scrollbar"
@@ -449,55 +513,69 @@ export function HomePage() {
                   role="tab"
                   aria-selected={active}
                   onClick={() => setActiveCategory(category)}
-                  className={`min-h-[40px] px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
+                  className={`relative min-h-[40px] px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap shrink-0 ${
                     active
-                      ? 'bg-[#762BFF] text-white'
-                      : 'bg-[#101019] text-[#A5A5B5] border border-[#292638] hover:text-white'
+                      ? 'text-white'
+                      : 'bg-[#101019] text-[#A5A5B5] border border-[#292638] hover:text-white hover:border-[#762BFF]/60'
                   }`}
                 >
-                  {category}
+                  {active && (
+                    <motion.span
+                      layoutId={prefersReduced ? undefined : 'home-work-filter'}
+                      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                      className="absolute inset-0 rounded-lg bg-[#762BFF] shadow-[0_6px_20px_-6px_rgba(118,43,255,0.7)]"
+                    />
+                  )}
+                  <span className="relative z-10">{category}</span>
                 </button>
               );
             })}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <RevealStagger
+            key={activeCategory}
+            staggerDelay={0.04}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
             {filteredWork.map((project) => (
-              <Link
-                key={project.id}
-                to={`/work/${project.slug}`}
-                className="group rounded-xl border border-[#292638] bg-[#101019] overflow-hidden flex flex-col hover:border-[#762BFF] hover:-translate-y-0.5 transition-[transform,border-color] duration-200"
-              >
-                <div className="aspect-[4/3] w-full overflow-hidden border-b border-[#292638] bg-[#08080D]">
-                  <ResilientImage
-                    src={project.imageUrl}
-                    alt={project.imageAlt}
-                    className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
-                    fallbackLabel={project.title}
-                  />
-                </div>
-                <div className="p-6 flex-1 flex flex-col justify-between gap-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-xs text-[#A5A5B5]">
-                      <span className="text-[#A855F7]">{project.category}</span>
-                      <span aria-hidden="true">·</span>
-                      <span>{project.sampleLabel}</span>
+              <RevealItem key={project.id} className="h-full">
+                <InteractiveCard className="h-full bg-[#101019]">
+                  <Link to={`/work/${project.slug}`} className="h-full flex flex-col">
+                    <div className="aspect-[4/3] w-full overflow-hidden border-b border-[#292638] bg-[#08080D]">
+                      <ResilientImage
+                        src={project.imageUrl}
+                        alt={project.imageAlt}
+                        className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300 ease-out"
+                        fallbackLabel={project.title}
+                      />
                     </div>
-                    <h3 className="font-display text-lg font-semibold text-white group-hover:text-[#A855F7] transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-[#A5A5B5] leading-relaxed">{project.summary}</p>
-                  </div>
+                    <div className="p-6 flex-1 flex flex-col justify-between gap-4">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-xs text-[#A5A5B5]">
+                          <span className="text-[#A855F7]">{project.category}</span>
+                          <span aria-hidden="true">·</span>
+                          <span>{project.sampleLabel}</span>
+                        </div>
+                        <h3 className="font-display text-lg font-semibold text-white group-hover:text-[#A855F7] transition-colors">
+                          {project.title}
+                        </h3>
+                        <p className="text-sm text-[#A5A5B5] leading-relaxed">{project.summary}</p>
+                      </div>
 
-                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-white">
-                    <span>View Case Template</span>
-                    <ArrowRight className="w-4 h-4 text-[#A855F7]" aria-hidden="true" />
-                  </span>
-                </div>
-              </Link>
+                      <span className="inline-flex items-center gap-1.5 text-sm font-medium text-white">
+                        <span>View Case Template</span>
+                        <ArrowRight
+                          className="w-4 h-4 text-[#A855F7] group-hover:translate-x-1 transition-transform duration-200"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </div>
+                  </Link>
+                </InteractiveCard>
+              </RevealItem>
             ))}
-          </div>
-        </Reveal>
+          </RevealStagger>
+        </div>
       </section>
 
       {/* Global Presence */}
@@ -537,8 +615,17 @@ export function HomePage() {
       {/* Consultation CTA */}
       <section className="py-16 sm:py-24 bg-[#101019]">
         <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-xl border border-[#292638] bg-gradient-to-br from-[#08080D] via-[#131123] to-[#101019] p-6 sm:p-12 lg:p-16 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-            <div className="max-w-2xl space-y-3">
+          <div className="relative overflow-hidden rounded-xl border border-[#292638] bg-gradient-to-br from-[#08080D] via-[#131123] to-[#101019] p-6 sm:p-12 lg:p-16 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-24 right-[-10%] w-[360px] h-[360px] rounded-full bg-[#762BFF]/16 blur-[110px] animate-luxury-float"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#A855F7]/60 to-transparent"
+            />
+
+            <div className="relative z-10 max-w-2xl space-y-3">
               <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-tight">
                 Have a Project in Mind?
               </h2>
@@ -548,16 +635,16 @@ export function HomePage() {
               </p>
             </div>
 
-            <div className="w-full lg:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 shrink-0">
+            <div className="relative z-10 w-full lg:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 shrink-0">
               <Link
                 to="/consultation"
-                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center px-6 py-3.5 rounded-lg border border-[#292638] bg-[#08080D] hover:border-[#762BFF] text-white text-sm font-medium transition-colors whitespace-nowrap"
+                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center px-6 py-3.5 rounded-lg border border-[#292638] bg-[#08080D]/90 hover:border-[#762BFF] text-white text-sm font-medium transition-colors whitespace-nowrap"
               >
                 Book a Consultation
               </Link>
               <Link
                 to="/quote"
-                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium transition-colors whitespace-nowrap"
+                className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium cta-glow whitespace-nowrap"
               >
                 Get a Free Quote
               </Link>

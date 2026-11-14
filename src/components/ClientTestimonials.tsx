@@ -9,6 +9,7 @@ import {
   Quote,
 } from 'lucide-react';
 import { useAgency } from '../context/AgencyContext';
+import { InteractiveCard } from './InteractiveCard';
 import { Reveal } from './Reveal';
 
 interface ClientTestimonialsProps {
@@ -147,7 +148,7 @@ export function ClientTestimonials({
         {layoutMode === 'carousel' ? (
           <div className="space-y-6">
             <div
-              className="overflow-hidden"
+              className="overflow-hidden py-1"
               role="region"
               aria-roledescription="carousel"
               aria-label="Client testimonials carousel"
@@ -177,50 +178,45 @@ export function ClientTestimonials({
                       className="px-3 shrink-0"
                       style={{ width: `${100 / itemsPerView}%` }}
                     >
-                      <article
-                        className={`group relative h-full overflow-hidden rounded-xl border border-[#292638] ${cardSurfaceClass} p-6 sm:p-7 flex flex-col justify-between gap-6 hover:border-[#762BFF]/80 transition-colors`}
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#A855F7]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                        />
-
-                        <div className="space-y-4">
-                          <div className="flex items-center justify-between gap-3">
-                            <div
-                              className={`w-9 h-9 rounded-lg border border-[#292638] ${badgeSurfaceClass} flex items-center justify-center text-[#A855F7] shrink-0`}
-                            >
-                              <Quote className="w-4 h-4" aria-hidden="true" />
+                      <InteractiveCard className={`h-full ${cardSurfaceClass} p-6 sm:p-7`}>
+                        <article className="h-full flex flex-col justify-between gap-6">
+                          <div className="space-y-4">
+                            <div className="flex items-center justify-between gap-3">
+                              <div
+                                className={`w-9 h-9 rounded-lg border border-[#292638] ${badgeSurfaceClass} flex items-center justify-center text-[#A855F7] shrink-0`}
+                              >
+                                <Quote className="w-4 h-4" aria-hidden="true" />
+                              </div>
+                              <span className="text-xs text-[#A5A5B5] truncate">{item.region}</span>
                             </div>
-                            <span className="text-xs text-[#A5A5B5] truncate">{item.region}</span>
-                          </div>
 
-                          <p className="text-xs font-medium text-[#A855F7]">
-                            {item.serviceCategory}
-                          </p>
-
-                          <blockquote className="text-sm sm:text-[15px] text-white/90 leading-relaxed">
-                            “{item.feedback}”
-                          </blockquote>
-                        </div>
-
-                        <div className="pt-4 border-t border-[#292638] flex items-center gap-3.5">
-                          <div
-                            aria-hidden="true"
-                            className={`w-10 h-10 rounded-full border border-[#292638] ${badgeSurfaceClass} flex items-center justify-center font-display text-xs font-semibold text-[#A855F7] shrink-0`}
-                          >
-                            {initials || 'CL'}
-                          </div>
-                          <div className="min-w-0">
-                            <p className="text-sm font-semibold text-white truncate">
-                              {item.clientName}
+                            <p className="text-xs font-medium text-[#A855F7]">
+                              {item.serviceCategory}
                             </p>
-                            <p className="text-xs text-[#A5A5B5] truncate">
-                              {item.role} · {item.company}
-                            </p>
+
+                            <blockquote className="text-sm sm:text-[15px] text-white/90 leading-relaxed">
+                              “{item.feedback}”
+                            </blockquote>
                           </div>
-                        </div>
-                      </article>
+
+                          <div className="pt-4 border-t border-[#292638] flex items-center gap-3.5">
+                            <div
+                              aria-hidden="true"
+                              className={`w-10 h-10 rounded-full border border-[#292638] ${badgeSurfaceClass} flex items-center justify-center font-display text-xs font-semibold text-[#A855F7] shrink-0`}
+                            >
+                              {initials || 'CL'}
+                            </div>
+                            <div className="min-w-0">
+                              <p className="text-sm font-semibold text-white truncate">
+                                {item.clientName}
+                              </p>
+                              <p className="text-xs text-[#A5A5B5] truncate">
+                                {item.role} · {item.company}
+                              </p>
+                            </div>
+                          </div>
+                        </article>
+                      </InteractiveCard>
                     </div>
                   );
                 })}
@@ -277,49 +273,43 @@ export function ClientTestimonials({
                   .join('');
 
                 return (
-                  <article
-                    key={item.id}
-                    className={`group relative overflow-hidden rounded-xl border border-[#292638] ${cardSurfaceClass} p-6 sm:p-7 flex flex-col justify-between gap-6 hover:border-[#762BFF]/80 transition-colors`}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#A855F7]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                    />
-
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between gap-3">
-                        <div
-                          className={`w-9 h-9 rounded-lg border border-[#292638] ${badgeSurfaceClass} flex items-center justify-center text-[#A855F7] shrink-0`}
-                        >
-                          <Quote className="w-4 h-4" aria-hidden="true" />
+                  <InteractiveCard key={item.id} className={`h-full ${cardSurfaceClass} p-6 sm:p-7`}>
+                    <article className="h-full flex flex-col justify-between gap-6">
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <div
+                            className={`w-9 h-9 rounded-lg border border-[#292638] ${badgeSurfaceClass} flex items-center justify-center text-[#A855F7] shrink-0`}
+                          >
+                            <Quote className="w-4 h-4" aria-hidden="true" />
+                          </div>
+                          <span className="text-xs text-[#A5A5B5] truncate">{item.region}</span>
                         </div>
-                        <span className="text-xs text-[#A5A5B5] truncate">{item.region}</span>
+
+                        <p className="text-xs font-medium text-[#A855F7]">{item.serviceCategory}</p>
+
+                        <blockquote className="text-sm sm:text-[15px] text-white/90 leading-relaxed">
+                          “{item.feedback}”
+                        </blockquote>
                       </div>
 
-                      <p className="text-xs font-medium text-[#A855F7]">{item.serviceCategory}</p>
-
-                      <blockquote className="text-sm sm:text-[15px] text-white/90 leading-relaxed">
-                        “{item.feedback}”
-                      </blockquote>
-                    </div>
-
-                    <div className="pt-4 border-t border-[#292638] flex items-center gap-3.5">
-                      <div
-                        aria-hidden="true"
-                        className={`w-10 h-10 rounded-full border border-[#292638] ${badgeSurfaceClass} flex items-center justify-center font-display text-xs font-semibold text-[#A855F7] shrink-0`}
-                      >
-                        {initials || 'CL'}
+                      <div className="pt-4 border-t border-[#292638] flex items-center gap-3.5">
+                        <div
+                          aria-hidden="true"
+                          className={`w-10 h-10 rounded-full border border-[#292638] ${badgeSurfaceClass} flex items-center justify-center font-display text-xs font-semibold text-[#A855F7] shrink-0`}
+                        >
+                          {initials || 'CL'}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-white truncate">
+                            {item.clientName}
+                          </p>
+                          <p className="text-xs text-[#A5A5B5] truncate">
+                            {item.role} · {item.company}
+                          </p>
+                        </div>
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold text-white truncate">
-                          {item.clientName}
-                        </p>
-                        <p className="text-xs text-[#A5A5B5] truncate">
-                          {item.role} · {item.company}
-                        </p>
-                      </div>
-                    </div>
-                  </article>
+                    </article>
+                  </InteractiveCard>
                 );
               })}
             </div>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { AgencyProvider } from './context/AgencyContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
@@ -25,13 +26,15 @@ function ScrollHandler() {
 
   useEffect(() => {
     if (hash) {
-      const target = document.getElementById(hash.slice(1));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-        return;
-      }
+      const timer = window.setTimeout(() => {
+        const target = document.getElementById(hash.slice(1));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 60);
+      return () => window.clearTimeout(timer);
     }
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, [pathname, hash]);
 
   return null;
@@ -48,12 +51,48 @@ function NotFoundPage() {
         </p>
         <Link
           to="/"
-          className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium transition-colors"
+          className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium cta-glow"
         >
           Return to Homepage
         </Link>
       </div>
     </section>
+  );
+}
+
+function AnimatedRoutes() {
+  const location = useLocation();
+  const prefersReduced = useReducedMotion();
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        initial={prefersReduced ? false : { opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={prefersReduced ? { opacity: 1 } : { opacity: 0, y: -6 }}
+        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <Routes location={location}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/:slug" element={<ServiceDetailPage />} />
+          <Route path="/departments" element={<DepartmentsPage />} />
+          <Route path="/work" element={<WorkPage />} />
+          <Route path="/work/:slug" element={<WorkDetailPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/consultation" element={<ConsultationPage />} />
+          <Route path="/quote" element={<QuotePage />} />
+          <Route path="/faq" element={<FaqPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
@@ -65,24 +104,7 @@ export default function App() {
         <div className="min-h-screen flex flex-col bg-[#08080D] text-white">
           <Navbar />
           <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/services/:slug" element={<ServiceDetailPage />} />
-              <Route path="/departments" element={<DepartmentsPage />} />
-              <Route path="/work" element={<WorkPage />} />
-              <Route path="/work/:slug" element={<WorkDetailPage />} />
-              <Route path="/pricing" element={<PricingPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/consultation" element={<ConsultationPage />} />
-              <Route path="/quote" element={<QuotePage />} />
-              <Route path="/faq" element={<FaqPage />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-              <Route path="/terms" element={<TermsPage />} />
-              <Route path="/admin" element={<AdminPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+            <AnimatedRoutes />
           </main>
           <Footer />
           <CookieBanner />

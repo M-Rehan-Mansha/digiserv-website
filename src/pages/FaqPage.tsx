@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { SeoHead } from '../components/SeoHead';
 import { FaqAccordion } from '../components/FaqAccordion';
+import { Reveal } from '../components/Reveal';
 import { useAgency } from '../context/AgencyContext';
 
 export function FaqPage() {
@@ -108,7 +109,7 @@ export function FaqPage() {
       </section>
 
       <section className="bg-[#08080D] py-16">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           {filteredFaqs.length > 0 ? (
             <FaqAccordion items={filteredFaqs} />
           ) : (
@@ -135,13 +136,13 @@ export function FaqPage() {
               </Link>
               <Link
                 to="/consultation"
-                className="px-5 py-2.5 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium transition-colors"
+                className="min-h-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium cta-glow"
               >
                 Book a Consultation
               </Link>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
     </>
   );

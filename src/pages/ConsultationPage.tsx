@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import { SeoHead } from '../components/SeoHead';
 import { InquiryForm } from '../components/InquiryForm';
+import { Reveal } from '../components/Reveal';
 
 const CONSULTATION_TOPICS = [
   { label: 'Shopify & Ecommerce Store Roadmap', focus: 'Shopify Consultation' },
@@ -46,7 +47,7 @@ export function ConsultationPage() {
       </section>
 
       <section className="bg-[#08080D] py-12 sm:py-16">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           <div className="lg:col-span-8">
             <InquiryForm
               mode="consultation"
@@ -91,7 +92,7 @@ export function ConsultationPage() {
               })}
             </div>
           </aside>
-        </div>
+        </Reveal>
       </section>
     </>
   );

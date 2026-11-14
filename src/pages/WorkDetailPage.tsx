@@ -2,6 +2,8 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { SeoHead } from '../components/SeoHead';
 import { ResilientImage } from '../components/ResilientImage';
+import { Reveal } from '../components/Reveal';
+import { InteractiveCard } from '../components/InteractiveCard';
 import { useAgency } from '../context/AgencyContext';
 import { getServiceBySlug } from '../data/services';
 
@@ -65,7 +67,7 @@ export function WorkDetailPage() {
               <div className="pt-2 flex flex-wrap gap-3">
                 <Link
                   to={`/quote?service=${encodeURIComponent(linkedService?.title || '')}`}
-                  className="px-6 py-3 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium transition-colors"
+                  className="min-h-[46px] inline-flex items-center justify-center px-6 py-3 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium cta-glow"
                 >
                   Request a Similar Build
                 </Link>
@@ -93,8 +95,8 @@ export function WorkDetailPage() {
       </section>
 
       <section className="bg-[#101019] py-16">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="rounded-xl border border-[#292638] bg-[#08080D] p-6 space-y-4">
+        <Reveal className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <InteractiveCard className="bg-[#08080D] p-6 space-y-4">
             <h2 className="font-display text-lg font-semibold text-white">Representative Scope</h2>
             <ul className="space-y-2.5 text-sm text-[#A5A5B5]">
               {project.scope.map((item) => (
@@ -104,9 +106,9 @@ export function WorkDetailPage() {
                 </li>
               ))}
             </ul>
-          </div>
+          </InteractiveCard>
 
-          <div className="rounded-xl border border-[#292638] bg-[#08080D] p-6 space-y-4">
+          <InteractiveCard className="bg-[#08080D] p-6 space-y-4">
             <h2 className="font-display text-lg font-semibold text-white">Key Deliverables</h2>
             <ul className="space-y-2.5 text-sm text-[#A5A5B5]">
               {project.deliverables.map((item) => (
@@ -116,9 +118,9 @@ export function WorkDetailPage() {
                 </li>
               ))}
             </ul>
-          </div>
+          </InteractiveCard>
 
-          <div className="rounded-xl border border-[#292638] bg-[#08080D] p-6 space-y-4">
+          <InteractiveCard className="bg-[#08080D] p-6 space-y-4">
             <h2 className="font-display text-lg font-semibold text-white">Execution Approach</h2>
             <ul className="space-y-2.5 text-sm text-[#A5A5B5]">
               {project.approach.map((item) => (
@@ -128,8 +130,8 @@ export function WorkDetailPage() {
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
+          </InteractiveCard>
+        </Reveal>
       </section>
     </>
   );

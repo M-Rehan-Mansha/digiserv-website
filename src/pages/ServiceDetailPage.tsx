@@ -4,7 +4,8 @@ import { SeoHead } from '../components/SeoHead';
 import { ServiceIcon } from '../components/ServiceIcon';
 import { FaqAccordion } from '../components/FaqAccordion';
 import { ResilientImage } from '../components/ResilientImage';
-import { Reveal } from '../components/Reveal';
+import { Reveal, RevealItem, RevealStagger } from '../components/Reveal';
+import { InteractiveCard } from '../components/InteractiveCard';
 import { SERVICES, getServiceBySlug } from '../data/services';
 import { useAgency } from '../context/AgencyContext';
 
@@ -61,6 +62,10 @@ export function ServiceDetailPage() {
       <section className="relative overflow-hidden border-b border-[#292638] bg-[#08080D] py-12 sm:py-20">
         <div
           aria-hidden="true"
+          className="pointer-events-none absolute -top-24 left-1/3 w-[380px] h-[380px] rounded-full bg-[#762BFF]/16 blur-[120px] animate-luxury-float"
+        />
+        <div
+          aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-agency-grid [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_75%)]"
         />
         <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
@@ -97,7 +102,7 @@ export function ServiceDetailPage() {
               <div className="pt-2 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3.5 sm:gap-4">
                 <Link
                   to={`/quote?service=${encodeURIComponent(service.title)}`}
-                  className="w-full sm:w-auto min-h-[46px] inline-flex items-center justify-center px-6 py-3 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium transition-colors whitespace-nowrap"
+                  className="w-full sm:w-auto min-h-[46px] inline-flex items-center justify-center px-6 py-3 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium cta-glow whitespace-nowrap"
                 >
                   Get a Quote for This Service
                 </Link>
@@ -168,25 +173,28 @@ export function ServiceDetailPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
+          <RevealStagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
             {service.subServices.map((sub, index) => (
-              <Link
-                key={sub}
-                to={`/quote?service=${encodeURIComponent(service.title)}&focus=${encodeURIComponent(sub)}`}
-                className="group min-h-[54px] rounded-xl border border-[#292638] bg-[#101019] px-5 py-4 flex items-center justify-between gap-3 hover:border-[#762BFF] transition-colors"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <Check className="w-4 h-4 text-[#A855F7] shrink-0" aria-hidden="true" />
-                  <span className="text-sm font-medium text-white group-hover:text-[#A855F7] transition-colors truncate">
-                    {sub}
-                  </span>
-                </div>
-                <span className="font-mono-tabular text-xs text-[#A5A5B5]/70 shrink-0">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-              </Link>
+              <RevealItem key={sub}>
+                <InteractiveCard className="bg-[#101019]">
+                  <Link
+                    to={`/quote?service=${encodeURIComponent(service.title)}&focus=${encodeURIComponent(sub)}`}
+                    className="group min-h-[54px] px-5 py-4 flex items-center justify-between gap-3"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <Check className="w-4 h-4 text-[#A855F7] shrink-0" aria-hidden="true" />
+                      <span className="text-sm font-medium text-white group-hover:text-[#A855F7] transition-colors truncate">
+                        {sub}
+                      </span>
+                    </div>
+                    <span className="font-mono-tabular text-xs text-[#A5A5B5]/70 shrink-0">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </Link>
+                </InteractiveCard>
+              </RevealItem>
             ))}
-          </div>
+          </RevealStagger>
         </Reveal>
       </section>
 
@@ -196,17 +204,16 @@ export function ServiceDetailPage() {
           <h2 className="font-display text-2xl sm:text-3xl font-semibold text-white">
             Key Benefits
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <RevealStagger className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {service.benefits.map((benefit) => (
-              <div
-                key={benefit.title}
-                className="rounded-xl border border-[#292638] bg-[#08080D] p-6 space-y-2"
-              >
-                <h3 className="font-display text-lg font-semibold text-white">{benefit.title}</h3>
-                <p className="text-sm text-[#A5A5B5] leading-relaxed">{benefit.description}</p>
-              </div>
+              <RevealItem key={benefit.title}>
+                <InteractiveCard className="h-full bg-[#08080D] p-6 space-y-2">
+                  <h3 className="font-display text-lg font-semibold text-white">{benefit.title}</h3>
+                  <p className="text-sm text-[#A5A5B5] leading-relaxed">{benefit.description}</p>
+                </InteractiveCard>
+              </RevealItem>
             ))}
-          </div>
+          </RevealStagger>
         </Reveal>
       </section>
 
@@ -216,18 +223,17 @@ export function ServiceDetailPage() {
           <h2 className="font-display text-2xl sm:text-3xl font-semibold text-white">
             Our Working Process
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <RevealStagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {service.process.map((step) => (
-              <div
-                key={step.step}
-                className="rounded-xl border border-[#292638] bg-[#101019] p-6 space-y-3"
-              >
-                <span className="font-mono-tabular text-xs text-[#A855F7]">Step {step.step}</span>
-                <h3 className="font-display text-lg font-semibold text-white">{step.title}</h3>
-                <p className="text-sm text-[#A5A5B5] leading-relaxed">{step.description}</p>
-              </div>
+              <RevealItem key={step.step}>
+                <InteractiveCard className="h-full bg-[#101019] p-6 space-y-3">
+                  <span className="font-mono-tabular text-xs text-[#A855F7]">Step {step.step}</span>
+                  <h3 className="font-display text-lg font-semibold text-white">{step.title}</h3>
+                  <p className="text-sm text-[#A5A5B5] leading-relaxed">{step.description}</p>
+                </InteractiveCard>
+              </RevealItem>
             ))}
-          </div>
+          </RevealStagger>
         </Reveal>
       </section>
 
@@ -254,35 +260,36 @@ export function ServiceDetailPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {displayWork.map((project) => (
-              <Link
-                key={project.id}
-                to={`/work/${project.slug}`}
-                className="group rounded-xl border border-[#292638] bg-[#08080D] overflow-hidden flex flex-col sm:flex-row hover:border-[#762BFF] transition-colors"
-              >
-                <div className="sm:w-52 aspect-[4/3] sm:aspect-auto shrink-0 border-b sm:border-b-0 sm:border-r border-[#292638]">
-                  <ResilientImage
-                    src={project.imageUrl}
-                    alt={project.imageAlt}
-                    className="w-full h-full object-cover"
-                    fallbackLabel={project.title}
-                  />
-                </div>
-                <div className="p-6 flex flex-col justify-between gap-3">
-                  <div className="space-y-1.5">
-                    <span className="text-xs text-[#A855F7]">
-                      {project.category} · {project.sampleLabel}
-                    </span>
-                    <h3 className="font-display text-lg font-semibold text-white group-hover:text-[#A855F7] transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-[#A5A5B5] leading-relaxed">{project.summary}</p>
+              <InteractiveCard key={project.id} className="bg-[#08080D]">
+                <Link
+                  to={`/work/${project.slug}`}
+                  className="group h-full flex flex-col sm:flex-row"
+                >
+                  <div className="sm:w-52 aspect-[4/3] sm:aspect-auto shrink-0 border-b sm:border-b-0 sm:border-r border-[#292638] overflow-hidden">
+                    <ResilientImage
+                      src={project.imageUrl}
+                      alt={project.imageAlt}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                      fallbackLabel={project.title}
+                    />
                   </div>
-                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-white">
-                    <span>Inspect Template</span>
-                    <ArrowRight className="w-4 h-4 text-[#A855F7]" aria-hidden="true" />
-                  </span>
-                </div>
-              </Link>
+                  <div className="p-6 flex flex-col justify-between gap-3">
+                    <div className="space-y-1.5">
+                      <span className="text-xs text-[#A855F7]">
+                        {project.category} · {project.sampleLabel}
+                      </span>
+                      <h3 className="font-display text-lg font-semibold text-white group-hover:text-[#A855F7] transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-[#A5A5B5] leading-relaxed">{project.summary}</p>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 text-sm font-medium text-white">
+                      <span>Inspect Template</span>
+                      <ArrowRight className="w-4 h-4 text-[#A855F7] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                    </span>
+                  </div>
+                </Link>
+              </InteractiveCard>
             ))}
           </div>
         </Reveal>
@@ -305,24 +312,29 @@ export function ServiceDetailPage() {
             <h2 className="font-display text-2xl font-semibold text-white">Related Services</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {relatedServices.map((rel) => (
-                <Link
-                  key={rel.id}
-                  to={`/services/${rel.slug}`}
-                  className="rounded-xl border border-[#292638] bg-[#08080D] p-6 space-y-3 hover:border-[#762BFF] transition-colors"
-                >
-                  <div className="flex items-center gap-3 text-[#A855F7]">
-                    <ServiceIcon name={rel.iconName} className="w-5 h-5" />
-                    <span className="font-mono-tabular text-xs">{rel.id}</span>
-                  </div>
-                  <h3 className="font-display text-lg font-semibold text-white">{rel.title}</h3>
-                  <p className="text-sm text-[#A5A5B5] leading-relaxed">{rel.shortDescription}</p>
-                </Link>
+                <InteractiveCard key={rel.id} className="bg-[#08080D]">
+                  <Link
+                    to={`/services/${rel.slug}`}
+                    className="block h-full p-6 space-y-3"
+                  >
+                    <div className="flex items-center gap-3 text-[#A855F7]">
+                      <ServiceIcon name={rel.iconName} className="w-5 h-5" />
+                      <span className="font-mono-tabular text-xs">{rel.id}</span>
+                    </div>
+                    <h3 className="font-display text-lg font-semibold text-white">{rel.title}</h3>
+                    <p className="text-sm text-[#A5A5B5] leading-relaxed">{rel.shortDescription}</p>
+                  </Link>
+                </InteractiveCard>
               ))}
             </div>
           </div>
 
-          <div className="rounded-xl border border-[#292638] bg-[#08080D] p-6 sm:p-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-            <div className="space-y-2 max-w-2xl">
+          <div className="relative overflow-hidden rounded-xl border border-[#292638] bg-[#08080D] p-6 sm:p-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-12 -top-12 w-56 h-56 rounded-full bg-[#762BFF]/16 blur-[80px]"
+            />
+            <div className="relative space-y-2 max-w-2xl">
               <h2 className="font-display text-2xl sm:text-3xl font-semibold text-white">
                 Ready to Scope Your {service.title} Project?
               </h2>
@@ -330,10 +342,10 @@ export function ServiceDetailPage() {
                 Tell us which deliverables you need and receive a clear, customized proposal.
               </p>
             </div>
-            <div className="w-full lg:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+            <div className="relative w-full lg:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
               <Link
                 to={`/quote?service=${encodeURIComponent(service.title)}`}
-                className="w-full sm:w-auto min-h-[46px] inline-flex items-center justify-center px-6 py-3 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium transition-colors whitespace-nowrap"
+                className="w-full sm:w-auto min-h-[46px] inline-flex items-center justify-center px-6 py-3 rounded-lg bg-[#762BFF] hover:bg-[#8844FF] text-white text-sm font-medium cta-glow whitespace-nowrap"
               >
                 Get a Quote
               </Link>

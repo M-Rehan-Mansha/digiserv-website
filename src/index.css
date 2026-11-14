@@ -33,7 +33,7 @@
   body {
     background-color: #08080D;
     color: #FFFFFF;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   *:focus-visible {
@@ -55,6 +55,71 @@
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+@keyframes luxuryFloat {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translate3d(18px, -14px, 0) scale(1.06);
+    opacity: 0.95;
+  }
+}
+
+@keyframes luxuryDriftReverse {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(-16px, 14px, 0) scale(1.05);
+    opacity: 0.85;
+  }
+}
+
+.animate-luxury-float {
+  animation: luxuryFloat 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-luxury-drift {
+  animation: luxuryDriftReverse 18s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.silver-accent-text {
+  background: linear-gradient(120deg, #FFFFFF 0%, #E2E2F0 48%, #C084FC 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cta-glow {
+  box-shadow: 0 8px 28px -10px rgba(118, 43, 255, 0.65);
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) {
+  .cta-glow:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 34px -8px rgba(168, 85, 247, 0.75);
+  }
+}
+
+.interactive-spotlight {
+  opacity: 0;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) {
+  .group:hover .interactive-spotlight,
+  .interactive-card:hover .interactive-spotlight {
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
